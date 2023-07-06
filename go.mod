@@ -1,4 +1,4 @@
-module github.com/danielvladco/go-proto-gql
+module github.com/jollaman999/go-proto-gql
 
 go 1.17
 

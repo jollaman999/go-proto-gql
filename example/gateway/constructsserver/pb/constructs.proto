@@ -1,6 +1,6 @@
 syntax = "proto3";
 package constructsserver;
-option go_package = "github.com/danielvladco/go-proto-gql/gateway/constructsserver/pb;constructsserver";
+option go_package = "github.com/jollaman999/go-proto-gql/gateway/constructsserver/pb;constructsserver";
 
 import "google/protobuf/any.proto";
 import "google/protobuf/empty.proto";

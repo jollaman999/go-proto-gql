@@ -10,7 +10,7 @@ import (
 	any "google.golang.org/protobuf/types/known/anypb"
 	empty "google.golang.org/protobuf/types/known/emptypb"
 
-	pb "github.com/danielvladco/go-proto-gql/example/gateway/constructsserver/pb"
+	pb "github.com/jollaman999/go-proto-gql/example/gateway/constructsserver/pb"
 )
 
 func main() {

@@ -10,11 +10,11 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/danielvladco/go-proto-gql/pkg/server"
-	pb "github.com/danielvladco/go-proto-gql/test/testdata"
 	"github.com/golang/protobuf/proto"
 	any "github.com/golang/protobuf/ptypes/any"
 	empty "github.com/golang/protobuf/ptypes/empty"
+	"github.com/jollaman999/go-proto-gql/pkg/server"
+	pb "github.com/jollaman999/go-proto-gql/test/testdata"
 	"github.com/nautilus/graphql"
 	"github.com/vektah/gqlparser/v2"
 	"github.com/vektah/gqlparser/v2/ast"
