@@ -1,6 +1,8 @@
 package server
 
 import (
+	"github.com/jollaman999/go-proto-gql/lib/logger"
+	"log"
 	"net/http"
 
 	"github.com/nautilus/gateway"
@@ -10,7 +12,7 @@ import (
 	"github.com/jollaman999/go-proto-gql/pkg/generator"
 )
 
-func Server(cfg *Config) (http.Handler, error) {
+func Server(cfg *Config, customLogger *log.Logger) (http.Handler, error) {
 	caller, descs, err := NewReflectCaller(cfg.Grpc)
 	if err != nil {
 		return nil, err
@@ -23,6 +25,7 @@ func Server(cfg *Config) (http.Handler, error) {
 
 	repo := generator.NewRegistry(gqlDesc)
 
+	logger.SetLogger(customLogger)
 	queryFactory := gateway.QueryerFactory(func(ctx *gateway.PlanningContext, url string) graphql.Queryer {
 		return QueryerLogger{NewQueryer(repo, caller)}
 	})

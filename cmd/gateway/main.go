@@ -29,7 +29,7 @@ func main() {
 	l, err := net.Listen("tcp", cfg.Address)
 	fatalOnErr(err)
 	log.Printf("[INFO] Gateway listening on address: %s\n", l.Addr())
-	handler, err := server.Server(cfg)
+	handler, err := server.Server(cfg, nil)
 	fatalOnErr(err)
 	if cfg.Tls != nil {
 		log.Fatal(http.ServeTLS(l, handler, cfg.Tls.Certificate, cfg.Tls.PrivateKey))
