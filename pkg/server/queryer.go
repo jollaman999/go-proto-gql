@@ -365,6 +365,10 @@ func (q *queryer) pbDecodeOneofField(desc *desc.MessageDescriptor, dynamicMsg *d
 		}
 
 		fieldDesc := q.pm.FindUnionFieldByMessageFQNAndName(desc.GetFullyQualifiedName(), out.Name)
+		fmt.Println(desc.GetFullyQualifiedName(), out.Name)
+		if fieldDesc == nil {
+			return nil, errors.New("one of field is empty")
+		}
 		protoVal := dynamicMsg.GetField(fieldDesc)
 		oneof[nameOrAlias(out)], err = q.gqlValue(protoVal, fieldDesc.GetMessageType(), fieldDesc.GetEnumType(), out)
 		if err != nil {
