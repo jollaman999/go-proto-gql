@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"github.com/jollaman999/go-proto-gql/lib/logger"
 	"github.com/jollaman999/go-proto-gql/pkg/protoparser"
 	"google.golang.org/grpc/credentials"
 	"log"
@@ -74,6 +75,10 @@ func NewReflectCaller(config *Grpc) (_ Caller, descs []*desc.FileDescriptor, err
 func (c caller) Call(ctx context.Context, rpc *desc.MethodDescriptor, message proto.Message) (proto.Message, error) {
 	startTime := time.Now()
 	res, err := c.serviceStub[rpc.GetService()].InvokeRpc(ctx, rpc, message)
-	log.Printf("[INFO] grpc call %q took: %fms", rpc.GetFullyQualifiedName(), float64(time.Since(startTime))/float64(time.Millisecond))
+	if logger.GetLogger() != nil {
+		logger.Printf(logger.INFO, false, "gRPC call %q took: %fms\n", rpc.GetFullyQualifiedName(), float64(time.Since(startTime))/float64(time.Millisecond))
+	} else {
+		log.Printf("[ INFO ] gRPC call %q took: %fms", rpc.GetFullyQualifiedName(), float64(time.Since(startTime))/float64(time.Millisecond))
+	}
 	return res, err
 }

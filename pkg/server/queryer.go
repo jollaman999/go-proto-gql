@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
+	"github.com/jollaman999/go-proto-gql/lib/logger"
 	"log"
 	"reflect"
 	"time"
@@ -39,7 +40,11 @@ type QueryerLogger struct {
 func (q QueryerLogger) Query(ctx context.Context, input *graphql.QueryInput, i interface{}) (err error) {
 	startTime := time.Now()
 	err = q.Next.Query(ctx, input, i)
-	log.Printf("[INFO] graphql call took: %fms", float64(time.Since(startTime))/float64(time.Millisecond))
+	if logger.GetLogger() != nil {
+		logger.Printf(logger.INFO, false, "GraphQL call took: %fms\n", float64(time.Since(startTime))/float64(time.Millisecond))
+	} else {
+		log.Printf("[ INFO ] GraphQL call took: %fms", float64(time.Since(startTime))/float64(time.Millisecond))
+	}
 	return err
 }
 
