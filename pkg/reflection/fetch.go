@@ -109,6 +109,8 @@ func (c *clientV2) ListPackages() (descriptors []*desc.FileDescriptor, err error
 	defer close(response)
 
 	errCh := make(chan error)
+	errChClosed := false
+
 	go func() {
 		for req := range request {
 			if err := stream.Send(req); err != nil {
@@ -123,6 +125,9 @@ func (c *clientV2) ListPackages() (descriptors []*desc.FileDescriptor, err error
 			if err != nil {
 				if err == io.EOF {
 					errCh <- errors.New("connection with reflect server closed before retrieving all data")
+					return
+				}
+				if errChClosed {
 					return
 				}
 				errCh <- err
@@ -151,6 +156,7 @@ func (c *clientV2) ListPackages() (descriptors []*desc.FileDescriptor, err error
 					}
 
 					close(errCh)
+					errChClosed = true
 				}()
 				continue
 			}
